@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Management</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="bg-overlay" id="bgOverlay" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop')"></div>
+    
+    <div class="p-8 max-w-[1400px] mx-auto min-h-screen">
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center gap-6">
+                <button id="backBtn" class="w-14 h-14 glass-panel rounded-2xl flex items-center justify-center text-slate-700 hover:bg-white transition-all shadow-lg">
+                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                </button>
+                <h1 id="courseTitle" class="text-4xl font-black text-white drop-shadow-lg tracking-tight">Course Curriculum</h1>
+            </div>
+            <div id="completeCourseBtnContainer" class="hidden">
+                <button id="completeCourseBtn" class="btn-primary bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-2xl shadow-xl">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i> Mark Course as Complete
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-4 space-y-8">
+                <div id="facultyForm" class="glass-panel p-8 rounded-[2.5rem] hidden animate-slide-up">
+                    <h2 id="formTitle" class="text-2xl font-black text-slate-900 mb-6 tracking-tight">Add New Lesson Unit</h2>
+                    <div class="space-y-5">
+                        <input type="text" id="lessonTitle" placeholder="Lesson Title" class="py-3.5">
+                        <select id="lessonType" class="py-3.5">
+                            <option value="text">Text Content</option>
+                            <option value="video">Video Lesson</option>
+                            <option value="image">Image/Infographic</option>
+                        </select>
+                        <textarea id="lessonContent" placeholder="Content or Video URL" rows="4" class="py-3.5"></textarea>
+                        <input type="text" id="lessonImg" placeholder="Optional Illustration URL" class="py-3.5">
+                        <div class="flex gap-3">
+                            <button id="saveLessonBtn" class="btn-primary flex-1 py-4">Save Lesson</button>
+                            <button id="cancelEditBtn" class="btn-primary flex-1 py-4 bg-slate-200 text-slate-600 hover:bg-slate-300 hidden">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-[2.5rem] animate-slide-up">
+                    <h3 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-3">
+                        <i data-lucide="list" class="w-5 h-5 text-blue-600"></i> Course Units
+                    </h3>
+                    <div id="lessonList" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8">
+                <div id="lessonPreview" class="glass-panel p-12 rounded-[3.5rem] min-h-[600px] animate-fade-in hidden">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="badge badge-blue py-2 px-4 text-sm">Active Lesson</span>
+                        <h2 id="previewTitle" class="text-4xl font-black text-slate-900 tracking-tight">Lesson Title</h2>
+                    </div>
+                    <img id="previewIllustration" src="" class="w-full h-80 object-cover rounded-[2.5rem] mb-10 shadow-2xl hidden">
+                    <div id="previewContentBox" class="prose prose-slate max-w-none"></div>
+                </div>
+
+                <div id="noLessonSelected" class="glass-panel p-20 rounded-[3.5rem] text-center flex flex-col items-center justify-center min-h-[600px] animate-fade-in">
+                    <div class="w-24 h-24 bg-blue-50 text-blue-200 rounded-[2rem] flex items-center justify-center mb-8">
+                        <i data-lucide="book-open" class="w-12 h-12"></i>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900 mb-4 tracking-tight">Select a unit to start learning</h3>
+                    <p class="text-slate-400 font-medium max-w-md mx-auto">Click on any lesson from the sidebar to view its content and track your progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lesson.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

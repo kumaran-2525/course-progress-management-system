@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+    <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop')"></div>
+    
+    <div id="loginBox" class="glass-panel p-10 rounded-[3rem] w-full max-w-[450px] animate-slide-up shadow-2xl">
+        <div class="flex justify-center mb-8">
+            <div class="w-20 h-20 bg-blue-600 text-white rounded-[2rem] flex items-center justify-center shadow-2xl transform hover:rotate-12 transition-transform">
+                <i data-lucide="log-in" class="w-10 h-10"></i>
+            </div>
+        </div>
+        <h2 class="text-4xl font-black text-center mb-2 tracking-tight text-slate-900">Portal Login</h2>
+        <p class="text-center text-slate-600 mb-10 font-semibold">Enter your credentials to continue</p>
+        
+        <div class="space-y-5">
+            <div class="relative">
+                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="email" id="loginEmail" placeholder="Email Address" class="pl-14">
+            </div>
+            <div class="relative">
+                <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="password" id="loginPassword" placeholder="Password" class="pl-14 pr-12">
+                <i data-lucide="eye" class="password-toggle" id="toggleLoginPass"></i>
+            </div>
+            <button id="loginBtn" class="btn-primary w-full py-4 text-lg mt-4">Enter Dashboard</button>
+        </div>
+        
+        <p class="text-center mt-10 text-slate-500 text-sm font-medium">
+            New user? <span id="showRegister" class="text-blue-600 cursor-pointer font-bold hover:underline">Create an account</span>
+        </p>
+    </div>
+
+    <div id="registerBox" class="glass-panel p-10 rounded-[3rem] w-full max-w-[500px] animate-slide-up hidden">
+        <div class="flex justify-center mb-8">
+            <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center shadow-lg">
+                <i data-lucide="user-plus" class="w-10 h-10"></i>
+            </div>
+        </div>
+        <h2 class="text-4xl font-black text-center mb-2 tracking-tight text-slate-900">Registration</h2>
+        <p class="text-center text-slate-500 mb-10 font-medium">Create an account to start learning</p>
+        
+        <div class="space-y-5">
+            <div class="relative">
+                <i data-lucide="graduation-cap" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 z-10"></i>
+                <select id="regRole" class="pl-14">
+                    <option value="student">Student Account</option>
+                    <option value="faculty">Faculty Account</option>
+                </select>
+            </div>
+            <div class="relative">
+                <i data-lucide="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="text" id="regName" placeholder="Full Name" class="pl-14">
+            </div>
+            <div class="relative">
+                <i data-lucide="book-open" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="text" id="regDept" placeholder="Department" class="pl-14">
+            </div>
+            <div id="studentFields" class="grid grid-cols-2 gap-4">
+                <div class="relative">
+                    <i data-lucide="hash" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                    <input type="text" id="regRoll" placeholder="Roll No" class="pl-14">
+                </div>
+                <div class="relative">
+                    <i data-lucide="calendar" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                    <input type="text" id="regYear" placeholder="Year" class="pl-14">
+                </div>
+            </div>
+            <div class="relative">
+                <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="email" id="regEmail" placeholder="Email Address" class="pl-14">
+            </div>
+            <div class="relative">
+                <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input type="password" id="regPassword" placeholder="Password" class="pl-14 pr-12">
+                <i data-lucide="eye" class="password-toggle" id="toggleRegPass"></i>
+            </div>
+            <button id="registerBtn" class="btn-primary w-full py-4 text-lg mt-4">Create Profile</button>
+        </div>
+        
+        <p class="text-center mt-10 text-slate-500 text-sm font-medium">
+            Have account? <span id="showLogin" class="text-blue-600 cursor-pointer font-bold hover:underline">Login here</span>
+        </p>
+    </div>
+
+    <script src="login.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

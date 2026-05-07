@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop')"></div>
+        
+        <div class="sidebar glass-panel">
+            <div class="profile-box text-center mb-10">
+                <div id="userAvatar" class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center text-3xl font-black mx-auto mb-4 shadow-lg">S</div>
+                <h3 id="userName" class="font-black text-xl text-slate-900 leading-tight">Student Name</h3>
+                <p id="userEmail" class="text-slate-500 text-xs font-medium mb-4">email@example.com</p>
+                <span id="userBadge" class="badge badge-blue">Student</span>
+            </div>
+
+            <nav class="flex-1">
+                <a id="navDashboard" class="nav-link active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a id="navMyLearning" class="nav-link"><i data-lucide="trophy"></i> My Learning</a>
+                <a id="navCourses" class="nav-link"><i data-lucide="book-open"></i> Explore Courses</a>
+                <a id="navProfile" class="nav-link"><i data-lucide="user"></i> Profile</a>
+            </nav>
+
+            <div class="pt-6 border-t border-slate-200/50">
+                <a id="logoutBtn" class="nav-link text-red-500 hover:bg-red-50"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </div>
+
+        <main class="content">
+            <div id="dashboardView" class="view-section active">
+                <h2 class="text-5xl font-black text-white mb-2 tracking-tight drop-shadow-lg">Welcome back!</h2>
+                <p class="text-white font-bold mb-12 text-lg drop-shadow-md">Your learning journey is looking great today.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="glass-panel p-8 rounded-[2.5rem]">
+                        <div class="flex items-center gap-5 mb-4">
+                            <div class="p-4 bg-blue-100 text-blue-600 rounded-2xl"><i data-lucide="book" class="w-8 h-8"></i></div>
+                            <div>
+                                <p class="text-slate-400 text-[0.65rem] font-black uppercase tracking-widest">Enrolled</p>
+                                <h4 id="statEnrolled" class="text-3xl font-black text-slate-900">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-[2.5rem]">
+                        <div class="flex items-center gap-5 mb-4">
+                            <div class="p-4 bg-emerald-100 text-emerald-600 rounded-2xl"><i data-lucide="check-circle" class="w-8 h-8"></i></div>
+                            <div>
+                                <p class="text-slate-400 text-[0.65rem] font-black uppercase tracking-widest">Completed</p>
+                                <h4 id="statCompleted" class="text-3xl font-black text-slate-900">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-8 rounded-[2.5rem]">
+                        <div class="flex items-center gap-5 mb-4">
+                            <div class="p-4 bg-amber-100 text-amber-600 rounded-2xl"><i data-lucide="clock" class="w-8 h-8"></i></div>
+                            <div>
+                                <p class="text-slate-400 text-[0.65rem] font-black uppercase tracking-widest">In Progress</p>
+                                <h4 id="statProgress" class="text-3xl font-black text-slate-900">0</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-black text-slate-900 mb-8">Recent Activity</h3>
+                <div id="recentActivityArea" class="space-y-4">
+                    <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400"><i data-lucide="history"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800">Started Python Basics</p>
+                                <p class="text-xs text-slate-400">2 hours ago</p>
+                            </div>
+                        </div>
+                        <span class="badge badge-blue">New</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myLearningView" class="view-section">
+                <h2 class="text-5xl font-black text-slate-900 mb-10 tracking-tight">My Learning</h2>
+                <div id="myLearningArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            </div>
+
+            <div id="coursesView" class="view-section">
+                <div class="flex justify-between items-end mb-12">
+                    <div>
+                        <h2 class="text-5xl font-black text-slate-900 tracking-tight mb-2">Explore Courses</h2>
+                        <p class="text-slate-500 font-medium">Find your next skill to master</p>
+                    </div>
+                    <div class="relative max-w-xs w-full">
+                        <i data-lucide="search" class="absolute left-4 top-4 text-slate-400 w-5 h-5"></i>
+                        <input type="text" id="courseSearch" placeholder="Search courses..." class="pl-12 py-4 shadow-sm">
+                    </div>
+                </div>
+                <div id="catalogArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            </div>
+
+
+            <div id="profileView" class="view-section">
+                <div class="max-w-3xl mx-auto">
+                    <div class="glass-panel p-12 rounded-[4rem] text-center">
+                        <div id="profileAvatar" class="w-40 h-40 bg-blue-100 text-blue-600 rounded-[3rem] flex items-center justify-center text-6xl font-black mx-auto mb-8 shadow-2xl">S</div>
+                        <h2 id="profileName" class="text-4xl font-black text-slate-900 mb-2">Student Name</h2>
+                        <p id="profileEmail" class="text-slate-500 font-medium mb-12 text-lg">email@example.com</p>
+                        
+                        <div class="grid grid-cols-2 gap-8 text-left mb-12">
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Department</p>
+                                <p id="profileDept" class="font-extrabold text-xl text-slate-800">Computer Science</p>
+                            </div>
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Roll Number</p>
+                                <p id="profileRoll" class="font-extrabold text-xl text-slate-800">CS101</p>
+                            </div>
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Academic Year</p>
+                                <p id="profileYear" class="font-extrabold text-xl text-slate-800">3rd Year</p>
+                            </div>
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Account Status</p>
+                                <p class="font-extrabold text-xl text-emerald-500">Active & Verified</p>
+                            </div>
+                        </div>
+                        <button id="profileBackBtn" class="btn-primary mx-auto px-10 py-4 rounded-2xl">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Catalog
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="student.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

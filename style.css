@@ -1,0 +1,321 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --accent: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --glass: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --sidebar-width: 280px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7) contrast(1.1) blur(2px);
+}
+
+.bg-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(15, 23, 42, 0.3) 100%);
+    backdrop-filter: blur(1px);
+}
+
+/* Glassmorphism Panels */
+.glass-panel {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+/* Animations */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes premiumIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(40px) scale(0.95); 
+        filter: blur(10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0) scale(1); 
+        filter: blur(0);
+    }
+}
+
+@keyframes premiumOut {
+    from { 
+        opacity: 1; 
+        transform: translateX(0) scale(1); 
+        filter: blur(0);
+    }
+    to { 
+        opacity: 0; 
+        transform: translateX(-40px) scale(0.95); 
+        filter: blur(10px);
+    }
+}
+
+.animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-premium-in { animation: premiumIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-premium-out { animation: premiumOut 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+.view-transition {
+    animation: fadeIn 0.4s ease-out, slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Layout */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 2rem 1.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 3rem;
+    min-height: 100vh;
+}
+
+/* Navigation */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    color: #64748b;
+    text-decoration: none;
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.nav-link:hover {
+    background: rgba(37, 99, 235, 0.05);
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+.nav-link.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+}
+
+/* Cards */
+.course-card {
+    border-radius: 2rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+}
+
+.course-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.course-card:hover .course-img {
+    transform: scale(1.05);
+}
+
+/* Forms & Buttons */
+input, select, textarea {
+    width: 100%;
+    padding: 1.1rem 1.5rem;
+    border-radius: 1.5rem;
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    font-weight: 600;
+    color: #0f172a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    display: block;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2), 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+    transform: translateY(-2px);
+}
+
+input::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 1.1rem 2.2rem;
+    border-radius: 1.5rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    letter-spacing: 0.03em;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 30px -8px rgba(37, 99, 235, 0.5), 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(0.97);
+    box-shadow: 0 5px 10px -3px rgba(37, 99, 235, 0.3);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.relative i:not(.password-toggle) {
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.relative:focus-within i:not(.password-toggle) {
+    color: var(--primary);
+}
+
+/* Progress Bar */
+.progress-container {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* View Sections */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-green { background: #d1fae5; color: #065f46; }
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+th {
+    padding: 1rem;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 1.25rem 1rem;
+    background: white;
+}
+
+tr td:first-child { border-radius: 1rem 0 0 1rem; }
+tr td:last-child { border-radius: 0 1rem 1rem 0; }

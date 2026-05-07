@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop')"></div>
+        
+        <div class="sidebar glass-panel">
+            <div class="profile-box text-center mb-10">
+                <div id="userAvatar" class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center text-3xl font-black mx-auto mb-4 shadow-lg">F</div>
+                <h3 id="userName" class="font-black text-xl text-slate-900 leading-tight">Faculty Name</h3>
+                <p id="userEmail" class="text-slate-500 text-xs font-medium mb-4">email@example.com</p>
+                <span id="userBadge" class="badge badge-blue">Faculty</span>
+            </div>
+
+            <nav class="flex-1">
+                <a id="navProfile" class="nav-link active"><i data-lucide="user"></i> Profile</a>
+                <a id="navCurriculum" class="nav-link"><i data-lucide="book-open"></i> My Curriculum</a>
+                <a id="navAddCourse" class="nav-link"><i data-lucide="plus-circle"></i> Add New Courses</a>
+                <a id="navTracking" class="nav-link"><i data-lucide="users"></i> Student Tracking</a>
+            </nav>
+
+            <div class="pt-6 border-t border-slate-200/50">
+                <a id="logoutBtn" class="nav-link text-red-500 hover:bg-red-50"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </div>
+
+        <main class="content">
+
+            <div id="curriculumView" class="view-section">
+                <div class="flex justify-between items-end mb-12">
+                    <div>
+                        <h2 class="text-5xl font-black text-slate-900 tracking-tight mb-2">My Curriculum</h2>
+                        <p class="text-slate-500 font-medium">Manage the courses you've created</p>
+                    </div>
+                    <div class="relative max-w-xs w-full">
+                        <i data-lucide="search" class="absolute left-4 top-4 text-slate-400 w-5 h-5"></i>
+                        <input type="text" id="courseSearch" placeholder="Search curriculum..." class="pl-12 py-4 shadow-sm">
+                    </div>
+                </div>
+                <div id="curriculumArea" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            </div>
+
+            <div id="addCourseView" class="view-section">
+                <div class="max-w-2xl mx-auto">
+                    <div class="glass-panel p-12 rounded-[4rem]">
+                        <h2 class="text-4xl font-black text-slate-900 mb-10 text-center tracking-tight">Create New Course</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <label class="block text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Course Name</label>
+                                <input type="text" id="newCourseName" placeholder="e.g. Python for Data Science" class="py-4">
+                            </div>
+                            <div>
+                                <label class="block text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Duration</label>
+                                <input type="text" id="newCourseDuration" placeholder="e.g. 8 Weeks" class="py-4">
+                            </div>
+                            <div>
+                                <label class="block text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Course Image URL</label>
+                                <input type="text" id="newCourseImage" placeholder="https://images.unsplash.com/..." class="py-4">
+                            </div>
+                            <div id="imagePreview" class="hidden h-56 rounded-[2.5rem] overflow-hidden border-2 border-dashed border-slate-200">
+                                <img id="previewImg" src="" class="w-full h-full object-cover">
+                            </div>
+                            <button id="addCourseBtn" class="btn-primary w-full py-5 text-xl mt-6">Create Course Record</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="trackingView" class="view-section">
+                <h2 class="text-5xl font-black text-slate-900 mb-10 tracking-tight">Student Tracking</h2>
+                <div class="glass-panel rounded-[3rem] overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-50/50">
+                                <th class="px-10 py-6">Student</th>
+                                <th class="px-10 py-6">Course</th>
+                                <th class="px-10 py-6">Lessons</th>
+                                <th class="px-10 py-6">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trackingArea" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="profileView" class="view-section active">
+                <div class="max-w-3xl mx-auto">
+                    <div class="glass-panel p-12 rounded-[4rem] text-center">
+                        <div id="profileAvatar" class="w-40 h-40 bg-blue-100 text-blue-600 rounded-[3rem] flex items-center justify-center text-6xl font-black mx-auto mb-8 shadow-2xl">F</div>
+                        <h2 id="profileName" class="text-4xl font-black text-slate-900 mb-2">Faculty Name</h2>
+                        <p id="profileEmail" class="text-slate-500 font-medium mb-12 text-lg">email@example.com</p>
+                        
+                        <div class="grid grid-cols-2 gap-8 text-left">
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Department</p>
+                                <p id="profileDept" class="font-extrabold text-xl text-slate-800">Computer Science</p>
+                            </div>
+                            <div class="bg-white/50 p-8 rounded-[2.5rem]">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Faculty ID</p>
+                                <p id="profileId" class="font-extrabold text-xl text-slate-800">#F101</p>
+                            </div>
+                            <div class="bg-white/50 p-8 rounded-[2.5rem] col-span-2">
+                                <p class="text-slate-400 text-[0.7rem] font-black uppercase tracking-[0.25em] mb-2">Account Status</p>
+                                <p class="font-extrabold text-xl text-emerald-500">Active & Verified Faculty</p>
+                            </div>
+                        </div>
+                        <button onclick="switchView('curriculum')" class="btn-primary mx-auto px-10 py-4 rounded-2xl mt-10">
+                            <i data-lucide="book-open" class="w-5 h-5"></i> Go to My Curriculum
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="editImageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[200] hidden flex items-center justify-center p-6">
+        <div class="glass-panel p-10 rounded-[3rem] w-full max-w-lg animate-scale-in">
+            <h2 class="text-3xl font-black text-slate-900 mb-8 tracking-tight">Update Course Image</h2>
+            <div class="space-y-6">
+                <input type="text" id="editImageUrl" placeholder="Paste new image URL..." class="py-4">
+                <div id="editPreviewContainer" class="hidden h-48 rounded-[2rem] overflow-hidden shadow-lg">
+                    <img id="editPreviewImg" src="" class="w-full h-full object-cover">
+                </div>
+                <div class="flex gap-4">
+                    <button id="saveImageBtn" class="btn-primary flex-1 py-4">Save Changes</button>
+                    <button id="closeEditModal" class="btn-primary flex-1 py-4 bg-slate-200 text-slate-600 hover:bg-slate-300">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="faculty.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
